@@ -23,14 +23,45 @@ import Logo from "./Logo.astro";
     </ul>
   </nav>
   <nav class="flex flex-grow justify-end basis-0">
-    <ul class="flex text-sm [&>li>a]:transition-colors [&>li>a]:duration-200 [&>li>a]:text-current [&>li>a]:inline-block [&>li>a]:px-4 [&>li>a]:py-2">
+    <ul
+      class="flex text-sm [&>li>a]:transition-colors [&>li>a]:duration-200 [&>li>a]:text-current [&>li>a]:inline-block [&>li>a]:px-4 [&>li>a]:py-2"
+    >
       <li><a href="#">Soporte</a></li>
       <li><a href="#">Tienda</a></li>
       <li><a href="#">Cuenta</a></li>
       <li><a href="#">Menu</a></li>
     </ul>
   </nav>
+
+  <div
+    id="menu-backdrop"
+    class={`absolute bg-black/5 backdrop-blur-lg rounded
+    left-[var(--left)] top-[var(--top)]
+    w-[var(--width)] h-[var(--height)]
+    transition-all duration-300
+    ease-in-out opacity-0 -z-10
+    `}
+  >
+  </div>
 </header>
+
+<script>
+  const listItem = document.querySelectorAll("#landing-header li");
+  const menuBackDrop = document.querySelector("#menu-backdrop") as HTMLElement
+
+  listItem.forEach((item) => {
+    item.addEventListener("mouseenter", () => {
+      const { left, top, width, height } = item.getBoundingClientRect();
+      console.log({ left, top, width, height });
+      menuBackDrop.style.setProperty("--left", `${left}px`);
+      menuBackDrop.style.setProperty("--top", `${top}px`);
+      menuBackDrop.style.setProperty("--width", `${width}px`);
+      menuBackDrop.style.setProperty("--height", `${height}px`);
+      menuBackDrop.style.opacity = "1";
+      menuBackDrop.style.visibility = "visible";
+    });
+  });
+</script>
 
 <script>
   const $header = document.querySelector("#landing-header") as HTMLElement;
